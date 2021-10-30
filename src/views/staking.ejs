@@ -66,3 +66,284 @@
 
     </main>
 <%- include('./common/footer') %>
+
+
+<script type="text/javascript">
+    function shorten(a){var sign = 4;var res=a.substring(0, sign + 2)+'...'+a.substring(a.length - sign);return res};
+const tokmas_contract_address = '0xD2606eD0a363B6c70A9CCcE77920f5278350beA0';
+const tokmas_staking_contract = '0xF80D1513964A692b70e0ac831fB18f4dfBBa0c73';
+const tokmas_ABI = JSON.parse('[{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"constant":true,"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"mint","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"renounceOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]');
+const tokmas_staking_ABI = JSON.parse('[{"constant":true,"inputs":[{"name":"account","type":"address"}],"name":"earned","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"rewards","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_rewardDistribution","type":"address"}],"name":"setRewardDistribution","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"tokmas","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"tokenAmount","type":"uint256"}],"name":"TokensOut","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"DURATION","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"withdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"reward","type":"uint256"}],"name":"notifyRewardAmount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"getReward","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"TronOut","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"lpToken","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"account","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"renounceOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"rewardRate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"lastTimeRewardApplicable","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"userRewardPerTokenPaid","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"starttime","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"isOwner","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"polSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"stake","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"lastUpdateTime","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"rewardPerToken","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"rewardPerTokenStored","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"exit","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"periodFinish","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_starttime","type":"uint256"},{"name":"_tokmas","type":"address"},{"name":"_lptoken","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"reward","type":"uint256"}],"name":"RewardAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"user","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Staked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"user","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"Withdrawn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"user","type":"address"},{"indexed":false,"name":"reward","type":"uint256"}],"name":"RewardPaid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"previousOwner","type":"address"},{"indexed":true,"name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"}]');
+var tokenContractInstance,stakingContractInstance,myAccountAddress;
+var maxApproveLimit = 1000000000000000;
+const bscscanTxURL = "https://testnet.bscscan.com/tx/"; //change to mainnet
+//get short user address
+function getUserAddress(userAddress){
+    firstFive   = userAddress.substring(0 , 5); 
+    lastFive    = userAddress.substr(userAddress.length - 5);
+    return firstFive+'...'+lastFive;
+}
+
+if(window.ethereum){
+    const oldProvider = web3.currentProvider; // keep a reference to metamask provider
+    var myweb3 = new Web3(oldProvider);
+     ethereum.on('accountsChanged', handleAccountsChanged);
+     function handleAccountsChanged (accounts) {
+    
+       if (accounts.length === 0) {
+    
+         // MetaMask is locked or the user has not connected any accounts
+         console.log('Please connect to MetaMask.')
+    
+       } else if (accounts[0] !== myAccountAddress) {
+           //localStorage.setItem('myAccountAddress', accounts[0]);     
+           window.location.href = "";
+    //     // Run any other necessary logic...
+       }
+    }
+}else{
+        const oldProvider = web3Infura.currentProvider; // keep a reference to metamask provider
+        var myweb3 = new Web3(oldProvider);
+}
+function checkAccount() {
+    
+    if (window.ethereum) {
+        myweb3.eth.getAccounts((err, accounts) => {
+    
+            if (accounts == null || accounts.length == 0) {
+                console.log("NO ACCOUNT CONNECTED");
+            } else {
+                if (myAccountAddress != accounts[0]) {
+                    myAccountAddress = accounts[0];                    
+                }
+                const shortAddress = getUserAddress(myAccountAddress);
+                $('#connectWallet,#connectWallet1').html(shortAddress);
+                $('#connectWallet,#connectWallet1').attr("href", "https://bscscan.com/address/"+myAccountAddress).attr('target','_blank');
+              
+            }
+        });
+    }
+    
+}
+setTimeout(checkAccount, 500);
+
+$(document).ready(async function() {
+        //connect to metamask wallet 
+        $("#connectWallet,#connectWallet1").click(async function(e){
+            e.preventDefault();
+            if(window.ethereum){
+                window.ethereum.enable();
+                var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                if (isMobile && window.ethereum.isMetaMask==true){
+                        const accounts_ = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        //alert(accounts_);
+                    
+                }else{
+                    const accounts_ = await ethereum.request({ method: 'eth_accounts' });
+                }
+                //const accounts_ = await ethereum.request({ method: 'eth_accounts' });
+                // if(accounts_!=""){
+                //     window.location.href = "";
+                // }
+            }
+        });
+        function init(){
+            tokenContractInstance = new myweb3.eth.Contract(tokmas_ABI, tokmas_contract_address, {
+                from: myAccountAddress, // default from address
+            });
+            stakingContractInstance = new myweb3.eth.Contract(tokmas_staking_ABI, tokmas_staking_contract, {
+                from: myAccountAddress, // default from address
+            });
+        }
+        
+        setTimeout(init,2000);  
+        
+        async function checkApproved(){            
+            var allowance = await tokenContractInstance.methods.allowance(myAccountAddress,tokmas_staking_contract).call();
+            if(allowance>0){ 
+                if(allowance>0){$(".app_btn").css("display","none").prop('disabled', true);$(".stk_sec_token").show();$(".stk_btn").prop('disabled', false);$(".unstk_btn").prop('disabled', false);}else{$(".app_btn").show().prop('disabled', false);$(".stk_sec_token").hide();$(".stk_btn").prop('disabled', true);$(".unstk_btn").prop('disabled', true);$("#stake_modal").modal("hide");$("#unstake_modal").modal("hide");}
+            }
+        }
+
+        async function checkBalance(){            
+            var user_lp_balance = await tokenContractInstance.methods.balanceOf(myAccountAddress).call();
+            console.log(user_lp_balance);
+            if(user_lp_balance>0){
+                
+                $('.user_lp_bal').html(user_lp_balance);
+            }
+        }
+            
+        async function checkStaked(){
+            var staked = await stakingContractInstance.methods.balanceOf(myAccountAddress).call();
+            if(staked>0){
+                $('#btnStake').prop('disabled', true); 
+                $('#btnUnstake').prop('disabled', false); 
+                $('.user_stk_staking').html(staked/1e6);
+                var reward = await stakingContractInstance.methods.earned(myAccountAddress).call(); 
+                if(reward>0){
+                    $('.user_earnings_staking').html(reward/1e6);
+                    $('#btnWithdraw2').hide();
+                    $('.wid_sec').show();
+                    $('#btnWithdraw').prop('disabled', false); 
+                    $('#btnExit').prop('disabled', false); 
+                }                              
+            }
+        }
+
+setInterval(async ()=>{
+
+        if(myAccountAddress!=false){
+            var user_stake = await stakingContractInstance.methods.balanceOf(myAccountAddress).call();
+            user_stake = parseFloat(user_stake / 1e6).toFixed(4);
+            var user_earn = await stakingContractInstance.methods.earned(myAccountAddress).call(); 
+            user_earn = parseFloat(user_earn / 1e6).toFixed(4);
+            $('.user_stk').html(user_stake);
+            $('.user_stk_bal').html(user_stake);
+            $('.user_earnings').html(user_earn);
+           
+            checkApproved();
+            checkBalance();
+            checkStaked();
+
+            if(user_earn>0){$(".wid_db_btn").css("display","none");$(".wid_sec").show();$(".wid_btn").prop('disabled', false);$(".ext_btn").prop('disabled', false);}else{$(".wid_db_btn").show();$(".wid_sec").hide();$(".wid_btn").prop('disabled', true);$(".ext_btn").prop('disabled', true);}
+
+        }else{console.log('Metamask not login!')}
+    
+}, 3000)
+
+
+$('.app_btn').click(async function() {
+   //approve tokens
+        maxApproveLimit = await tokenContractInstance.methods.totalSupply().call();
+        
+        var result = await tokenContractInstance.methods.approve(tokmas_staking_contract,maxApproveLimit).send({
+            from: myAccountAddress,
+            to: tokmas_staking_contract,
+            gasPrice: 10000000000,
+            gasLimit: 1000000,
+            //value : 0,       
+        });
+        
+        if(result.status){
+            toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
+            $('#btnApprove').hide();
+            $('.stk_sec_token').show();
+        }else{
+            toastr.error('Transaction Failed. Try Again.');
+        }
+});
+
+$('.stk_btn').click(async function() {$("#stake_modal").modal("show");}); 
+$('.stk_mod_btn').click(async function() {
+    let stk_amt = $('#stk_amt').val();let lp_bal = $('.user_lp_bal').html();let tok="TRX";
+    console.log(stk_amt);console.log(lp_bal);
+    if(!$.trim(stk_amt).length){toastr.error('Not a valid amount');return false;}
+    if(parseFloat(stk_amt)<=0){toastr.error('Not a valid amount');return false;}
+    if(parseFloat(stk_amt)>parseFloat(lp_bal)){toastr.error('Not enough LP token balance');return false;}
+   
+    let stk_amt_val = stk_amt * 1e6;
+    var result = await stakingContractInstance.methods.stake(stk_amt_val).send({
+        from: myAccountAddress,
+        to: tokmas_staking_contract,
+        gasPrice: 10000000000,
+        gasLimit: 1000000,
+        //value : 0,       
+    });
+
+    if(result.status){
+        $("#stake_modal").modal("hide");
+        toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
+        //checkStaked();
+    }else{
+        toastr.error('Transaction Failed. Try Again.');
+    }
+
+});
+
+$('.unstk_btn').click(async function() {$("#unstake_modal").modal("show");});
+$('.unstk_mod_btn').click(async function() {
+    let unstk_amt = $('#unstk_amt').val(); console.log(unstk_amt);let user_stk_bal = $('.user_stk_bal').html();console.log('user stake is');console.log(user_stk_bal);
+    if(!$.trim(unstk_amt).length){toastr.error('Not a valid amount');return false;}
+    if(parseFloat(unstk_amt)<=0){toastr.error('Not a valid amount');return false;}
+    if(parseFloat(unstk_amt)>parseFloat(user_stk_bal)){toastr.error('Not enough LP tokens staked');return false;}
+    let unstk_amt_val = unstk_amt * 1e6;    
+    var result = await stakingContractInstance.methods.withdraw(unstk_amt_val).send({
+        from: myAccountAddress,
+        to: tokmas_contract_address,
+        gasPrice: 10000000000,
+        gasLimit: 1000000,
+        //value : 0,       
+    });
+
+    if(result.status){
+        $("#unstake_modal").modal("hide");
+        toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
+    }else{
+        toastr.error('Transaction Failed. Try Again.');
+    }
+});
+
+$('.wid_btn').click(async function() {
+    var result = await stakingContractInstance.methods.getReward().send({
+        from: myAccountAddress,
+        to: tokmas_contract_address,
+        gasPrice: 10000000000,
+        gasLimit: 1000000,
+        //value : 0,       
+    });
+
+    if(result.status){
+        toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
+    }else{
+        toastr.error('Transaction Failed. Try Again.');
+    }
+});
+
+$('.ext_btn').click(async function() {
+          var result = await stakingContractInstance.methods.exit().send({
+                 from: myAccountAddress,
+                 to: tokmas_staking_contract,
+                 gasPrice: 10000000000,
+                 gasLimit: 1000000,
+                 //value : 0,       
+             });
+
+            if(result.status){
+                toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
+            }else{
+                toastr.error('Transaction Failed. Try Again.');
+            }
+    });
+
+
+});
+// $('.ref_stats_btn').click(async function() {
+//     $('.my_ref_btn').html('Loading...');
+//     let user_address= await window.tronWeb.defaultAddress.base58;
+//     function doAjax() {return $.ajax({type: 'post',url: '/helpers/data.php',data: {action : 'stats',wallet: user_address},datatype: 'json',});}
+//     doAjax().then( function(data) { var response = JSON.parse(data);
+//         if (response.error == false) {$('.my_ref_btn').html('My referral Stats');var my_affiliates = response.affiliates;var my_income = response.income;var log_user = response.user;}else{console.log(response.message)}
+//         $('.my_referrals').html(my_affiliates);$('.my_income').html(my_income);$('.ref_log_user').val(log_user);
+        
+//     });
+// });
+
+// setInterval(async ()=>{
+//     let user_address=await window.tronWeb.defaultAddress.base58;
+//     let loguser=$('.ref_log_user').val(); console.log(loguser);let my_aff_earnings=$('.my_income').html();console.log(my_aff_earnings);
+//     if(loguser!=user_address) {$('.ref_stats').hide();
+//     }else{$('.ref_stats').show();console.log(my_aff_earnings);
+//         if(my_aff_earnings>40){$('.aff_wid').prop('disabled', false);$('.min_wid').hide();};}
+// }, 1000);
+
+
+// $('.aff_wid').click(async function() {
+//     let user_address= await window.tronWeb.defaultAddress.base58;
+//     function doAjaxAff() {return $.ajax({type: 'post',url: '/helpers/data.php',data: {action : 'withdraw',wallet: user_address},datatype: 'json',});}
+//     doAjaxAff().then( function(data) { var response = JSON.parse(data);
+//         if (response.error == false) {$('.ref_stats').hide();var trxid=response.trxid; toastr.success('Transaction Initiated. Check status on <a href="https://tronscan.org/#/transaction/'+trxid+'" target="_blank">TronScan</a>');}else{toastr.error(response.message);}
+        
+//     });
+// });
+</script>
