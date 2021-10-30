@@ -11,75 +11,284 @@ const tokmas_staking_ABI = JSON.parse('[{"constant":true,"inputs":[{"name":"acco
 var lpContractInstance,tokmasbnbPoolContractInstance,myAccountAddress;
 var maxApproveLimit = 1000000000000000;
 const bscscanTxURL = "https://testnet.bscscan.com/tx/"; //change to mainnet
+
 //get short user address
 function getUserAddress(userAddress){
-    firstFive   = userAddress.substring(0 , 5); 
+    firstFive   = userAddress.substring(0 , 5);
     lastFive    = userAddress.substr(userAddress.length - 5);
     return firstFive+'...'+lastFive;
 }
-
-if(window.ethereum){
+if(window.ethereum || window.BinanceChain){
     const oldProvider = web3.currentProvider; // keep a reference to metamask provider
     var myweb3 = new Web3(oldProvider);
      ethereum.on('accountsChanged', handleAccountsChanged);
      function handleAccountsChanged (accounts) {
-    
-       if (accounts.length === 0) {
-    
-         // MetaMask is locked or the user has not connected any accounts
-         console.log('Please connect to MetaMask.')
-    
-       } else if (accounts[0] !== myAccountAddress) {
-           //localStorage.setItem('myAccountAddress', accounts[0]);     
-           window.location.href = "";
-    //     // Run any other necessary logic...
-       }
+        if (accounts.length === 0) {
+            // MetaMask is locked or the user has not connected any accounts
+            console.log('Please connect to MetaMask.')
+        } else if (accounts[0] !== myAccountAddress) {
+            //localStorage.setItem('myAccountAddress', accounts[0]);
+            window.location.href = "";
+            // Run any other necessary logic...
+        }
     }
-}else{
+    if (window.BinanceChain) window.BinanceChain.autoRefreshOnNetworkChange = false;
+} else{
         const oldProvider = web3Infura.currentProvider; // keep a reference to metamask provider
         var myweb3 = new Web3(oldProvider);
 }
+
+/* 
 function checkAccount() {
-    
     if (window.ethereum) {
         myweb3.eth.getAccounts((err, accounts) => {
-    
             if (accounts == null || accounts.length == 0) {
                 console.log("NO ACCOUNT CONNECTED");
             } else {
                 if (myAccountAddress != accounts[0]) {
-                    myAccountAddress = accounts[0];                    
+                    myAccountAddress = accounts[0];
                 }
                 const shortAddress = getUserAddress(myAccountAddress);
                 $('#connectWallet,#connectWallet1').html(shortAddress);
                 $('#connectWallet,#connectWallet1').attr("href", "https://bscscan.com/address/"+myAccountAddress).attr('target','_blank').removeClass('connectAcc');
-              
             }
         });
     }
-    
 }
-setTimeout(checkAccount, 500);
+setTimeout(checkAccount, 500); 
+*/
+
+/*
+*   Connect to wallets
+*/
+
+const rpcUrl = 'https://bsc-dataseed.binance.org/'
+const WalletConnectProvider = window.WalletConnectProvider.default
+
+// Connect to current provider
+function connectToProvider(cb) {
+    setTimeout( ()=> {
+        console.log('------', window.BinanceChain)
+        binance =  window.BinanceChain
+        if(typeof window.ethereum !== 'undefined' && window.ethereum._state.isConnected && window.ethereum.selectedAddress) {
+            if (typeof window.ethereum !== 'undefined' && window.ethereum.networkVersion == 56) {
+                if(
+                    window.ethereum.isMetaMask === true
+                    || window.ethereum.isTrust === true
+                ) {
+                    metamaskConnect(cb)
+                }
+            }           
+            else {
+                const switch_confirm = window.confirm('You need to switch to BSC')
+                if(switch_confirm) {
+                    window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0x38' }],
+                    });
+                }
+            } 
+        }
+        else if (typeof window.BinanceChain !== 'undefined' && window.BinanceChain.isConnected()) {
+            if (typeof window.ethereum !== 'undefined' && window.BinanceChain.chainId === 'Binance-Chain-Tigris') {
+                binanceWalletConnect(cb)
+            }           
+            else {
+                const switch_confirm = window.confirm('You need to switch to BSC')
+                if(switch_confirm) {
+                    window.BinanceChain.switchNetwork('bbc-mainnet')
+                }
+            } 
+        }
+    }, 100);
+}
+
+// Connect with metamask, trust wallet or mathwallet
+function metamaskConnect(cb) {
+    if (typeof window.ethereum !== 'undefined') {
+        if (window.ethereum.networkVersion == 56) {
+            ethereum.request({method: 'eth_requestAccounts'})
+            .then(function (res) {
+                if(window.ethereum.isMathWallet === true) {
+                    console.log('Connected with Math Wallet')
+                } else if(window.ethereum.isMetaMask === true) {
+                    console.log('Connected with Metamask')
+                } else if(window.ethereum.isTrust === true) {
+                    console.log('Connected with Trust Wallet')
+                }
+                if(typeof cb === 'function') cb(res)
+                	console.log(res)
+            })
+            .catch(function(err) {
+                console.error(err.message)
+            })
+        }
+        else {
+            const switch_confirm = window.confirm('You need to switch to BSC')
+            if(switch_confirm) {
+                window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x38' }],
+                });
+            }
+        }       
+    } else {
+        console.error('Metamask not detected !')
+    }
+}
+
+// Connect to Binance Wallet
+function binanceWalletConnect(cb) {
+    if (typeof window.BinanceChain !== 'undefined') {
+        if (window.BinanceChain.chainId === 'Binance-Chain-Tigris') {
+            BinanceChain.request({method: "eth_accounts"})
+            .then(function (res) {
+                console.log('Connected with Binance Wallet')
+                if(typeof cb === 'function') cb(res)
+            })
+            .catch(function(err) {
+                console.error(err.message)
+            })
+        }           
+        else {
+            const switch_confirm = window.confirm('You need to switch to BSC')
+            if(switch_confirm) {
+                window.BinanceChain.switchNetwork('bbc-mainnet')
+            }
+        }       
+    } else {
+        console.error('Binance Wallet not detected !')
+    }
+}
+
+// Connect to WalletConnect
+function walletConnectConnect(cb) {
+    let provider = new WalletConnectProvider({rpc: rpcUrl})
+    provider.enable()
+        .then(function(res) {
+            if(typeof cb === 'function') cb(res)
+        })
+        .catch(function() {
+            provider.walletConnectProvider = undefined
+            provider.disconnect()
+        })
+}
+
+// Connect to token pocket
+function tokenPocketConnect(cb) {
+    if (typeof window.tp !== 'undefined') {
+        tp.getCurrentWallet()
+            .then(function(res) {
+                if(typeof cb === 'function') cb(res)
+            })
+    } else {
+        console.error('Token Pocket not detected !')
+    }
+}
 
 $(document).ready(async function() {
-	        //connect to metamask wallet 
-        $("#connectWallet,#connectWallet1").click(async function(e){alert('aq')
-            e.preventDefault();
-            if(window.ethereum){
-                window.ethereum.enable();
-                var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                if (isMobile && window.ethereum.isMetaMask==true){
-                        const accounts_ = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                        //alert(accounts_);
-                    
-                }else{
-                    const accounts_ = await ethereum.request({ method: 'eth_accounts' });
-                }
-                //const accounts_ = await ethereum.request({ method: 'eth_accounts' });
-                // if(accounts_!=""){
-                //     window.location.href = "";
-                // }
+
+        // window.ethereum.getAccounts(function(err, accounts){
+        //    if (err != null) {
+        //       console.log(err)
+        //    }
+        //    else if (accounts.length === 0) {
+        //       console.log('MetaMask is locked')
+        //    }
+        //    else {
+        //       console.log('MetaMask is unlocked')
+        //    }
+        // });       
+
+    // Account already connected
+    connectToProvider(function(accs) {
+        $(document).trigger('walletConnected', accs)
+    })
+
+    /* Manually connect to provider */
+
+    // Connect to Metamask, Trust Wallet or Math Wallet
+    $(document).on('click', '#metamask-connect', function(e) {
+        e.preventDefault()
+        metamaskConnect(function(accs) {
+            $(document).trigger('walletConnected', accs)
+        })
+    })
+
+    $(document).on('click', '#trustwallet-connect', function(e) {
+        e.preventDefault()
+        metamaskConnect(function(accs) {
+            $(document).trigger('walletConnected', accs)
+        })
+    })
+
+    // Connect to Binance Wallet extension
+    $(document).on('click', '#binancewallet-connect', function(e) {
+        e.preventDefault()
+        binanceWalletConnect(function(accs) {
+            $(document).trigger('walletConnected', accs)
+        })
+    })
+
+    // Connect to walletconnect provider
+    $(document).on('click', '#walletconnect-connect', function() {
+        walletConnectConnect(function(accs) {
+            $(document).trigger('walletConnected', accs)
+        })
+    })
+
+    // Connect to TokenPocket
+    $(document).on('click', '#tokenpocket-connect', function() {
+        tokenPocketConnect(function(accs) {
+            $(document).trigger('walletConnected', accs)
+        })
+    })
+
+    // Connected !
+    $(document).on('walletConnected', function(e, account) {
+        $('#connectWallet, #connectWallet1')
+            .html(getUserAddress(account))
+            .attr("href", "https://bscscan.com/address/"+account)
+            .attr('target','_blank')
+            .removeClass('connectAcc')
+        $("#login_modal").modal('hide')
+    })
+
+
+
+    // Handle events
+    if (typeof window.ethereum !== 'undefined') {
+        ethereum.on('accountsChanged', (accounts) => {
+            $("#login_modal").modal('hide')
+            if(accounts.length === 0) {
+                console.log('Disconnected')
+                $('#connectWallet, #connectWallet1')
+                    .html('Connect')
+                    .removeAttr("href")
+                    .removeAttr('target')
+                    .addClass('connectAcc')
+            } else {
+                $(document).trigger('walletConnected', accounts[0])
             }
-        });
+        })
+
+        ethereum.on('chainChanged', (chainId) => {
+            console.log('Chain changed')
+            window.location.reload()
+        })
+    } else {
+        console.log('win.eth not available')
+    }
 
 })
+
+$(document).on('click', '.connectAcc', function() {
+    $("#login_modal").modal('show')
+});
+
+$(document).ready(function() {
+    let url = window.location.href;
+  	$('li a').each(function() {$( this ).removeClass( "active" );
+	    if (this.href === url) {$(this).closest('a').addClass('active');}
+  	});
+});
