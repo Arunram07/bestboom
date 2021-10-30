@@ -83,9 +83,3 @@ $(document).ready(async function() {
         });
 
 })
-$('.connectAcc').click(function() {$("#login_modal").modal("show");});
-$(document).ready(function() {let url = window.location.href;
-  	$('li a').each(function() {$( this ).removeClass( "active" );
-	    if (this.href === url) {$(this).closest('a').addClass('active');}
-  	});
-});
