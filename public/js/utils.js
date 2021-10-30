@@ -62,8 +62,8 @@ setTimeout(checkAccount, 500);
 *   Connect to wallets
 */
 
-const rpcUrl = 'https://bsc-dataseed.binance.org/'
-const WalletConnectProvider = window.WalletConnectProvider.default
+//const rpcUrl = 'https://bsc-dataseed.binance.org/'
+//const WalletConnectProvider = window.WalletConnectProvider.default
 
 // Connect to current provider
 function connectToProvider(cb) {
