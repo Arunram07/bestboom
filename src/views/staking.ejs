@@ -117,8 +117,8 @@ function checkAccount() {
                     myAccountAddress = accounts[0];                    
                 }
                 const shortAddress = getUserAddress(myAccountAddress);
-                $('#connectWallet,#connectWallet1').html(shortAddress);
-                $('#connectWallet,#connectWallet1').attr("href", "https://bscscan.com/address/"+myAccountAddress).attr('target','_blank');
+                $('#connectWallet').html(shortAddress);
+                $('#connectWallet').attr("href", "https://bscscan.com/address/"+myAccountAddress).attr('target','_blank');
               
             }
         });
@@ -129,7 +129,7 @@ setTimeout(checkAccount, 500);
 
 $(document).ready(async function() {
         //connect to metamask wallet 
-        $("#connectWallet,#connectWallet1").click(async function(e){
+        $("#connectWallet").click(async function(e){
             e.preventDefault();
             if(window.ethereum){
                 window.ethereum.enable();
