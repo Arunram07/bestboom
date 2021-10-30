@@ -11,25 +11,26 @@ const tokmas_staking_ABI = JSON.parse('[{"constant":true,"inputs":[{"name":"acco
 var lpContractInstance,tokmasbnbPoolContractInstance,myAccountAddress;
 var maxApproveLimit = 1000000000000000;
 const bscscanTxURL = "https://testnet.bscscan.com/tx/"; //change to mainnet
-
 //get short user address
 function getUserAddress(userAddress){
-    firstFive   = userAddress.substring(0 , 5);
+    firstFive   = userAddress.substring(0 , 5); 
     lastFive    = userAddress.substr(userAddress.length - 5);
     return firstFive+'...'+lastFive;
 }
 
-/*
 if(window.ethereum){
     const oldProvider = web3.currentProvider; // keep a reference to metamask provider
     var myweb3 = new Web3(oldProvider);
      ethereum.on('accountsChanged', handleAccountsChanged);
      function handleAccountsChanged (accounts) {
+    
        if (accounts.length === 0) {
+    
          // MetaMask is locked or the user has not connected any accounts
          console.log('Please connect to MetaMask.')
+    
        } else if (accounts[0] !== myAccountAddress) {
-           //localStorage.setItem('myAccountAddress', accounts[0]);
+           //localStorage.setItem('myAccountAddress', accounts[0]);     
            window.location.href = "";
     //     // Run any other necessary logic...
        }
@@ -38,196 +39,47 @@ if(window.ethereum){
         const oldProvider = web3Infura.currentProvider; // keep a reference to metamask provider
         var myweb3 = new Web3(oldProvider);
 }
-/* function checkAccount() {
+function checkAccount() {
+    
     if (window.ethereum) {
         myweb3.eth.getAccounts((err, accounts) => {
+    
             if (accounts == null || accounts.length == 0) {
                 console.log("NO ACCOUNT CONNECTED");
             } else {
                 if (myAccountAddress != accounts[0]) {
-                    myAccountAddress = accounts[0];
+                    myAccountAddress = accounts[0];                    
                 }
                 const shortAddress = getUserAddress(myAccountAddress);
                 $('#connectWallet,#connectWallet1').html(shortAddress);
                 $('#connectWallet,#connectWallet1').attr("href", "https://bscscan.com/address/"+myAccountAddress).attr('target','_blank').removeClass('connectAcc');
+              
             }
         });
     }
+    
 }
-setTimeout(checkAccount, 500); */
-
-
-
-
-
-/*
-*   Connect to wallets
-*/
-
-const rpcUrl = 'https://bsc-dataseed.binance.org/'
-const WalletConnectProvider = window.WalletConnectProvider.default
-
-// Connect to current provider
-function connectToProvider(cb) {
-    if (typeof window.ethereum !== 'undefined') {
-        if(
-            window.ethereum.isMetaMask === true
-            || window.ethereum.isTrust === true
-        ) {
-            metamaskConnect(cb)
-        }
-    }
-    if (typeof window.BinanceChain !== 'undefined') {
-        binanceWalletConnect(cb)
-    }
-}
-
-// Connect with metamask, trust wallet or mathwallet
-function metamaskConnect(cb) {
-    if (typeof window.ethereum !== 'undefined') {
-        ethereum.request({method: 'eth_requestAccounts'})
-            .then(function (res) {
-                if(window.ethereum.isMathWallet === true) {
-                    console.log('Connected with Math Wallet')
-                } else if(window.ethereum.isMetaMask === true) {
-                    console.log('Connected with Metamask')
-                } else if(window.ethereum.isTrust === true) {
-                    console.log('Connected with Trust Wallet')
-                }
-                if(typeof cb === 'function') cb(res)
-            })
-            .catch(function(err) {
-                console.error(err.message)
-            })
-    } else {
-        console.error('Metamask not detected !')
-    }
-}
-
-// Connect to Binance Wallet
-function binanceWalletConnect(cb) {
-    if (typeof window.BinanceChain !== 'undefined') {
-        BinanceChain.request({method: "eth_accounts"})
-            .then(function (res) {
-                console.log('Connected with Binance Wallet')
-                if(typeof cb === 'function') cb(res)
-            })
-            .catch(function(err) {
-                console.error(err.message)
-            })
-    } else {
-        console.error('Binance Wallet not detected !')
-    }
-}
-
-// Connect to WalletConnect
-function walletConnectConnect(cb) {
-    let provider = new WalletConnectProvider({rpc: rpcUrl})
-    provider.enable()
-        .then(function(res) {
-            if(typeof cb === 'function') cb(res)
-        })
-        .catch(function() {
-            provider.walletConnectProvider = undefined
-            provider.disconnect()
-        })
-}
-
-// Connect to token pocket
-function tokenPocketConnect(cb) {
-    if (typeof window.tp !== 'undefined') {
-        tp.getCurrentWallet()
-            .then(function(res) {
-                if(typeof cb === 'function') cb(res)
-            })
-    } else {
-        console.error('Token Pocket not detected !')
-    }
-}
+setTimeout(checkAccount, 500);
 
 $(document).ready(async function() {
-    // Account already connected
-    connectToProvider(function(accs) {
-        $(document).trigger('walletConnected', accs)
-    })
-
-    /* Manually connect to provider */
-
-    // Connect to Metamask, Trust Wallet or Math Wallet
-    $(document).on('click', '#metamask-connect', function(e) {
-        e.preventDefault()
-        metamaskConnect(function(accs) {
-            $(document).trigger('walletConnected', accs)
-        })
-    })
-
-    // Connect to Binance Wallet extension
-    $(document).on('click', '#binancewallet-connect', function(e) {
-        e.preventDefault()
-        binanceWalletConnect(function(accs) {
-            $(document).trigger('walletConnected', accs)
-        })
-    })
-
-    // Connect to walletconnect provider
-    $(document).on('click', '#walletconnect-connect', function() {
-        walletConnectConnect(function(accs) {
-            $(document).trigger('walletConnected', accs)
-        })
-    })
-
-    // Connect to TokenPocket
-    $(document).on('click', '#tokenpocket-connect', function() {
-        tokenPocketConnect(function(accs) {
-            $(document).trigger('walletConnected', accs)
-        })
-    })
-
-    // Connected !
-    $(document).on('walletConnected', function(e, account) {
-        $('#connectWallet, #connectWallet1')
-            .html(getUserAddress(account))
-            .attr("href", "https://bscscan.com/address/"+account)
-            .attr('target','_blank')
-            .removeClass('connectAcc')
-        $("#login_modal").modal('hide')
-    })
-
-
-
-    // Handle events
-    if (typeof window.ethereum !== 'undefined') {
-        ethereum.on('accountsChanged', (accounts) => {
-            $("#login_modal").modal('hide')
-            if(accounts.length === 0) {
-                console.log('Disconnected')
-                $('#connectWallet, #connectWallet1')
-                    .html('Connect')
-                    .removeAttr("href")
-                    .removeAttr('target')
-                    .addClass('connectAcc')
-            } else {
-                $(document).trigger('walletConnected', accounts[0])
+	        //connect to metamask wallet 
+        $("#connectWallet,#connectWallet1").click(async function(e){
+            e.preventDefault();
+            if(window.ethereum){
+                window.ethereum.enable();
+                var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                if (isMobile && window.ethereum.isMetaMask==true){
+                        const accounts_ = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        //alert(accounts_);
+                    
+                }else{
+                    const accounts_ = await ethereum.request({ method: 'eth_accounts' });
+                }
+                //const accounts_ = await ethereum.request({ method: 'eth_accounts' });
+                // if(accounts_!=""){
+                //     window.location.href = "";
+                // }
             }
-        })
-
-        ethereum.on('chainChanged', (chainId) => {
-            console.log('Chain changed')
-            window.location.reload()
-        })
-    } else {
-        console.log('win.eth not available')
-    }
+        });
 
 })
-
-$(document).on('click', '.connectAcc', function() {
-    $("#login_modal").modal('show')
-});
-
-$(document).ready(function() {
-    let url = window.location.href;
-  	$('li a').each(function() {$( this ).removeClass( "active" );
-	    if (this.href === url) {$(this).closest('a').addClass('active');}
-  	});
-});

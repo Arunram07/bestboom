@@ -64,3 +64,175 @@
 
     </main>
 <%- include('./common/footer') %>
+<script type="text/javascript">
+    $(document).ready(async function() {
+        function init(){
+            lpContractInstance = new myweb3.eth.Contract(lp_ABI, lp_contract_address, {
+                    from: myAccountAddress, // default from address
+            });
+            tokmasbnbPoolContractInstance = new myweb3.eth.Contract(tokmasbnbPool_ABI, tokmasbnbPool_contract_address, {
+                from: myAccountAddress, // default from address
+            });            
+        }
+        
+        setTimeout(init,2000);  
+       async function checkApproved(){            
+            var allowance = await lpContractInstance.methods.allowance(myAccountAddress,tokmasbnbPool_contract_address).call();
+            if(allowance>0){ 
+                if(allowance>0){$(".app_btn").css("display","none").prop('disabled', true);$(".stk_sec").show();$(".stk_btn").prop('disabled', false);$(".unstk_btn").prop('disabled', false);}else{$(".app_btn").show().prop('disabled', false);$(".stk_sec").hide();$(".stk_btn").prop('disabled', true);$(".unstk_btn").prop('disabled', true);$("#stake_modal").modal("hide");$("#unstake_modal").modal("hide");}
+            }
+        }
+        async function checkBalance(){            
+            var user_lp_balance = await lpContractInstance.methods.balanceOf(myAccountAddress).call();
+            
+            if(user_lp_balance>0){
+                $('.user_lp_bal').html(user_lp_balance);
+            }
+        }
+        
+        $('#btnApproveLP').click(async function(){
+            maxApproveLimit = await lpContractInstance.methods.totalSupply().call();
+            
+            var result = await lpContractInstance.methods.approve(tokmasbnbPool_contract_address,maxApproveLimit).send({
+                from: myAccountAddress,
+                to: lp_contract_address,
+                gasPrice: 10000000000,
+                gasLimit: 1000000,
+                //value : 0,       
+            });
+            
+            if(result.status){
+                toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
+            }else{
+                toastr.error('Transaction Failed. Try Again.');
+            }
+        });
+
+     
+        async function checkStaked(){
+            var staked = await tokmasbnbPoolContractInstance.methods.balanceOf(myAccountAddress).call();
+            if(staked>0){
+                $('#btnStakeLP').prop('disabled', true); 
+                $('#btnUnstakeLP').prop('disabled', false); 
+                $('.user_stk').html(staked/1e6);
+                var reward = await tokmasbnbPoolContractInstance.methods.earned(myAccountAddress).call(); 
+                if(reward>0){
+                    $('.user_earnings').html(reward/1e6);
+                    $('#btnWithdrawLP2').hide();
+                    $('.wid_sec').show();
+                    $('#btnWithdrawLP').prop('disabled', false); 
+                    $('#btnExitLP').prop('disabled', false); 
+                }                              
+            }
+        }
+
+        setInterval(async ()=>{
+
+            if(myAccountAddress!=false){
+                var user_stake = await tokmasbnbPoolContractInstance.methods.balanceOf(myAccountAddress).call();
+                user_stake = user_stake / 1e6;
+                //user_stake = parseFloat(user_stake / 1e6).toFixed(4);
+                var user_earn = await tokmasbnbPoolContractInstance.methods.earned(myAccountAddress).call(); 
+                user_earn = user_earn / 1e6; //user_earn = parseFloat(user_earn / 1e6).toFixed(4);
+                $('.user_stk').html(user_stake);
+                $('.user_stk_bal').html(user_stake);
+                $('.user_earnings').html(user_earn);
+                console.log(user_stake);
+                console.log(user_earn);
+               
+                checkApproved();
+                checkBalance();
+                checkStaked();
+    
+                if(user_earn>0){$(".wid_db_btn").css("display","none");$(".wid_sec").show();$(".wid_btn").prop('disabled', false);$(".ext_btn").prop('disabled', false);}else{$(".wid_db_btn").show();$(".wid_sec").hide();$(".wid_btn").prop('disabled', true);$(".ext_btn").prop('disabled', true);}
+    
+            }else{console.log('Metamask not login!')}
+        
+        }, 3000)
+       
+        $('.stk_btn').click(async function() {$("#stake_modal").modal("show");}); 
+        $('.stk_mod_btn').click(async function() {
+            let stk_amt = $('#stk_amt').val();let lp_bal = $('.user_lp_bal').html();let tok="TRX";
+            console.log(stk_amt);console.log(lp_bal);
+            if(!$.trim(stk_amt).length){toastr.error('Not a valid amount');return false;}
+            if(parseFloat(stk_amt)<=0){toastr.error('Not a valid amount');return false;}
+            if(parseFloat(stk_amt)>parseFloat(lp_bal)){toastr.error('Not enough LP token balance');return false;}
+           
+            let stk_amt_val = stk_amt * 1e6;
+            var result = await tokmasbnbPoolContractInstance.methods.stake(stk_amt_val).send({
+                from: myAccountAddress,
+                to: tokmasbnbPool_contract_address,
+                gasPrice: 10000000000,
+                gasLimit: 1000000,
+                //value : 0,       
+            });
+        
+            if(result.status){
+                $("#stake_modal").modal("hide");
+                toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
+                //checkStaked();
+            }else{
+                toastr.error('Transaction Failed. Try Again.');
+            }
+        
+        });
+
+        $('.unstk_btn').click(async function() {$("#unstake_modal").modal("show");});   
+        $('.unstk_mod_btn').click(async function() {
+            let unstk_amt = $('#unstk_amt').val(); console.log(unstk_amt);let user_stk_bal = $('.user_stk_bal').html();console.log('user stake is');console.log(user_stk_bal);
+            if(!$.trim(unstk_amt).length){toastr.error('Not a valid amount');return false;}
+            if(parseFloat(unstk_amt)<=0){toastr.error('Not a valid amount');return false;}
+            if(parseFloat(unstk_amt)>parseFloat(user_stk_bal)){toastr.error('Not enough LP tokens staked');return false;}
+            let unstk_amt_val = unstk_amt * 1e6;    
+            var result = await tokmasbnbPoolContractInstance.methods.withdraw(unstk_amt_val).send({
+                from: myAccountAddress,
+                to: tokmasbnbPool_contract_address,
+                gasPrice: 10000000000,
+                gasLimit: 1000000,
+                //value : 0,       
+            });
+        
+            if(result.status){
+                $("#unstake_modal").modal("hide");
+                toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
+            }else{
+                toastr.error('Transaction Failed. Try Again.');
+            }
+        });
+
+        $('.wid_btn').click(async function() {
+            var result = await tokmasbnbPoolContractInstance.methods.getReward().send({
+                from: myAccountAddress,
+                to: tokmasbnbPool_contract_address,
+                gasPrice: 10000000000,
+                gasLimit: 1000000,
+                //value : 0,       
+            });
+        
+            if(result.status){
+                toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
+            }else{
+                toastr.error('Transaction Failed. Try Again.');
+            }
+        });
+
+        $('.ext_btn').click(async function() {
+                
+            var result = await tokmasbnbPoolContractInstance.methods.exit().send({
+                from: myAccountAddress,
+                to: tokmasbnbPool_contract_address,
+                gasPrice: 10000000000,
+                gasLimit: 1000000,
+                //value : 0,       
+            });
+
+           if(result.status){
+               toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
+           }else{
+               toastr.error('Transaction Failed. Try Again.');
+           }
+            
+       });
+        
+});
+</script>
