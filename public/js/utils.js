@@ -63,7 +63,7 @@ setTimeout(checkAccount, 500);
 
 $(document).ready(async function() {
 	        //connect to metamask wallet 
-        $("#connectWallet,#connectWallet1").click(async function(e){
+        $("#connectWallet,#connectWallet1").click(async function(e){alert('aq')
             e.preventDefault();
             if(window.ethereum){
                 window.ethereum.enable();
