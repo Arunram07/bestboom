@@ -111,18 +111,20 @@ setInterval(async ()=>{
 
     if(myAccountAddress!=false){
         var user_stake = await stakingContractInstance.methods.balanceOf(myAccountAddress).call();
-        user_stake = parseFloat(user_stake / 1e6).toFixed(4);
+        user_stake = parseFloat(user_stake / 1e6)
         var user_earn = await stakingContractInstance.methods.earned(myAccountAddress).call(); 
-        user_earn = parseFloat(user_earn / 1e6).toFixed(4);
+        user_earn = parseFloat(user_earn / 1e6)
         var totalSupply = await stakingContractInstance.methods.totalSupply().call();
-        var myShare = ((user_stake/totalSupply)/1e6)*0.01;
+        totalSupply = parseFloat(totalSupply / 1e6);
+        var myShare = (user_stake/totalSupply)*0.01;
         var polSupply = await stakingContractInstance.methods.polSupply().call();
         $('.tot_staked').html(totalSupply/1e6);
         $('.pol_supply').html(polSupply/1e6);
         $('.user_stk').html(user_stake);
         $('.user_stk_bal').html(user_stake);
         $('.user_earnings').html(user_earn);
-        $('.myShare').html(myShare+'%');
+        console.log(myShare)
+        $('.myShare').html(myShare);
        
         checkApproved();
         checkBalance();
