@@ -39,7 +39,7 @@
                             <div class="content">
                                 <h2 class="title" style="font-weight: 400;margin-bottom: 0px;font-size: 24px;">LP STAKING</h2>
                                 <hr style="width:100%; margin: auto;color:#000  " />
-                                <span class="price" style="color: #C7A17A;font-size: 25px;font-family: 'Bebas Neue', cursive;padding-top: 10px;">12.00</span>
+                                <span class="price user_lp_bal" style="color: #C7A17A;font-size: 25px;font-family: 'Bebas Neue', cursive;padding-top: 10px;">0</span>
                                 <h5 style="font-weight: 400;">LP Tokens Staked</h5>
                                 <button class="btn btn_primary text-uppercase" style="margin-top: 25px;">Approve TOK/BNB LP</button>
                             </div>
@@ -50,7 +50,7 @@
                             <div class="content">
                                 <h2 class="title" style="font-weight: 400;margin-bottom: 0px;font-size: 24px;">Rewards</h2>
                                 <hr style="width:100%; margin: auto;color:#000  " />
-                                <span class="price" style="color: #C7A17A;font-size: 25px;font-family: 'Bebas Neue', cursive;padding-top: 10px;">12.00</span>
+                                <span class="price user_earnings" style="color: #C7A17A;font-size: 25px;font-family: 'Bebas Neue', cursive;padding-top: 10px;">0</span>
                                 <h5 style="font-weight: 500;">TOK EARNED</h5>
                                 <button class="btn btn_primary text-uppercase" style="margin-top: 25px;">Withdraw</button>
                             </div>
@@ -65,7 +65,7 @@
     </main>
 <%- include('./common/footer') %>
 <script type="text/javascript">
-    $(document).ready(async function() {
+$(document).ready(async function() {
         function init(){
             lpContractInstance = new myweb3.eth.Contract(lp_ABI, lp_contract_address, {
                     from: myAccountAddress, // default from address
@@ -84,7 +84,8 @@
         }
         async function checkBalance(){            
             var user_lp_balance = await lpContractInstance.methods.balanceOf(myAccountAddress).call();
-            
+            console.log('lp balance')
+            console.log(user_lp_balance)
             if(user_lp_balance>0){
                 $('.user_lp_bal').html(user_lp_balance);
             }
