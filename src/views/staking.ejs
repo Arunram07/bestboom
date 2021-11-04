@@ -27,21 +27,16 @@
             <div class="row" style="justify-content:center;">
                 <div class="col-xl-4 col-lg-4 col-md-8 mt-30 text-center">
                     <div class="wcu__item">
-                        <ul class="about__list list-unstyled" style="text-align: left;margin-bottom: 1px;padding-top: 25px;">
-                            <li><span style="color: #1b2026 !important;font-size: 15px;"><i class="icon fal fa-long-arrow-right" style="margin-bottom: 20px;background: #fff;color: #000;line-height: 30px;width: 30px;height: 30px;margin-right: 5px;"></i> TOTAL STAKED TOKENS </span><span style="text-align:right;color: #1b2026 !important;" class="tot_staked">0</span></li>
-                            <li><span style="color: #1b2026 !important;font-size: 15px;"><i class="icon fal fa-long-arrow-right" style="margin-bottom: 20px;background: #fff;color: #000;line-height: 30px;width: 30px;height: 30px;margin-right: 5px;"></i> MY STAKING SHARE </span><span style="text-align:right;color: #1b2026 !important;" class="myShare">16</span></li>
-                            <li><span style="color: #1b2026 !important;font-size: 15px;"><i class="icon fal fa-long-arrow-right" style="background: #fff;color: #000;line-height: 30px;width: 30px;height: 30px;margin-right: 5px;"></i> POOL SUPPLY </span><span style="text-align:right;color: #1b2026 !important;" class="pol_supply">321424</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-8 mt-30 text-center">
-                    <div class="wcu__item">
                         <div class="content">
                             <h2 class="title" style="font-weight: 400;margin-bottom: 0px;font-size: 24px;">STAKING</h2>
                             <hr style="width:100%; margin: auto;color:#000" />
-                            <span class="price user_stk_staking box_values">12.00</span>
+                            <span class="price user_stk_staking box_values">0</span>
                             <h5 style="font-weight: 400;"> Tokens Staked</h5>
-                            <button class="btn btn_primary text-uppercase" style="margin-top: 25px;">Approve</button>
+                            <button class="btn btn_primary text-uppercase app_btn" style="margin-top: 25px;">Approve</button>
+                            <div class="stk_sec_token mt-25" style="display: none;">
+                                <button class="btn btn_primary stk_btn" disabled>STAKE</button>
+                                <button class="btn btn_primary unstk_btn" disabled>UNSTAKE</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -50,16 +45,76 @@
                         <div class="content">
                             <h2 class="title" style="font-weight: 400;margin-bottom: 0px;font-size: 24px;">Rewards</h2>
                             <hr style="width:100%; margin: auto;color:#000" />
-                            <span class="price user_earnings_staking box_values">12.00</span>
+                            <span class="price user_earnings_staking box_values">0</span>
                             <h5 style="font-weight: 500;">TOK EARNED</h5>
-                            <button class="btn btn_primary text-uppercase" style="margin-top: 25px;">Withdraw</button>
+                            <button class="btn btn_primary text-uppercase wid_db_btn" style="margin-top: 25px;">Withdraw</button>
+                            <div class="wid_sec mt-25" style="display:flex;display: none;">
+                                <button class="btn btn_primary wid_btn" disabled>WITHDRAW</button>
+                                <button class="btn btn_primary ext_btn" disabled>EXIT</button>
+                            </div>
                         </div>
                     </div>
             </div>
+
+            <div class="row" style="justify-content:center;">
+                <div class="col-md-8 mt-30 text-center">
+                    <div class="wcu__item">
+                        <ul class="about__list list-unstyled" style="text-align: left;margin-bottom: 1px;padding-top: 25px;">
+                            <li><span style="color: #1b2026 !important;font-size: 15px;"><i class="icon fal fa-long-arrow-right" style="margin-bottom: 20px;background: #fff;color: #000;line-height: 30px;width: 30px;height: 30px;margin-right: 5px;"></i> TOTAL STAKED TOKENS </span><span style="text-align:right;color: #1b2026 !important;" class="tot_staked">0</span></li>
+                            <li><span style="color: #1b2026 !important;font-size: 15px;"><i class="icon fal fa-long-arrow-right" style="margin-bottom: 20px;background: #fff;color: #000;line-height: 30px;width: 30px;height: 30px;margin-right: 5px;"></i> MY STAKING SHARE </span><span style="text-align:right;color: #1b2026 !important;" class="myShare">0</span></li>
+                            <li><span style="color: #1b2026 !important;font-size: 15px;"><i class="icon fal fa-long-arrow-right" style="background: #fff;color: #000;line-height: 30px;width: 30px;height: 30px;margin-right: 5px;"></i> POOL SUPPLY </span><span style="text-align:right;color: #1b2026 !important;" class="pol_supply">0</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row" style="justify-content:center;">
+                    <div class="col-md-4 mt-20 text-center">
+                        <div class="wcu__item" style="padding:10px;background:#010103;">
+                            <div class="content">
+                                <h2 class="title" style="font-weight: 400;margin-bottom: 0px;font-size: 24px;color: #fff;">View on BSC Scan</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-20 text-center">
+                        <div class="wcu__item" style="padding:10px;background:#010103;">
+                            <div class="content">
+                                <h2 class="title" style="font-weight: 400;margin-bottom: 0px;font-size: 24px;color: #fff;">Trade on Pancakeswap</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
     <!-- wcu section end -->
 </main>
+
+<div class="modal fade" id="stake_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal_me_top" role="document"><div class="modal-content modal-custom modal_me_custom"><div class="modal-body thirty_pad">
+        <div class="transfer-respond">
+            <h4 class="modal_me_title">STAKE DLIKE/TRX LP Tokens</h4>
+            <label class="six_hun"><span class="user_lp_bal">0</span> DLK-TRX LP Available</label>
+            <div class="row line"><div class="col-md-12"><div class="form-group">
+                <div class="input-group mb-3"><input type="text" class="form-control" name="stk_amt" id="stk_amt" placeholder="Enter Amount to Stake"><div class="input-group-append"><div class="input-group-text mb-deck modal_deck"> DLIKE/TRX LP</div></div>
+                <input type="hidden" id="refer_by" value="<?php echo $referrer;?>" />
+            </div> </div></div></div>
+            <center><button type="submit" class="btn btn_primary stk_mod_btn">STAKE</button></center>
+        </div>
+     </div></div></div>
+</div>
+
+<div class="modal fade" id="unstake_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal_me_top" role="document"><div class="modal-content modal-custom modal_me_custom"><div class="modal-body thirty_pad">
+        <div class="transfer-respond">
+            <h4 class="modal_me_title">UNSTAKE DLIKE/TRX LP Tokens</h4>
+            <label class="six_hun"><span class="user_stk_bal">0</span> DLK-TRX LP Staked</label>
+            <div class="row line"><div class="col-md-12"><div class="form-group">
+                <div class="input-group mb-3"><input type="text" class="form-control" name="unstk_amt" id="unstk_amt" placeholder="Enter Amount to UNStake"><div class="input-group-append"><div class="input-group-text mb-deck modal_deck"> DLIKE/TRX LP</div></div>
+            </div> </div></div></div>
+            <center><button type="submit" class="btn btn_primary unstk_mod_btn">UNSTAKE</button></center>
+        </div>
+     </div></div></div>
+</div>
 <%- include('./common/footer') %>
 
 
@@ -116,15 +171,15 @@ setInterval(async ()=>{
         user_earn = parseFloat(user_earn / 1e6)
         var totalSupply = await stakingContractInstance.methods.totalSupply().call();
         totalSupply = parseFloat(totalSupply / 1e6);
-        var myShare = (user_stake/totalSupply)*0.01;
+        var myShare = (user_stake/totalSupply)*100;
+        myShare = myShare.toFixed(2)
         var polSupply = await stakingContractInstance.methods.polSupply().call();
-        $('.tot_staked').html(totalSupply/1e6);
+        $('.tot_staked').html(totalSupply);
         $('.pol_supply').html(polSupply/1e6);
+        $('.myShare').html(myShare+'%');
         $('.user_stk').html(user_stake);
         $('.user_stk_bal').html(user_stake);
         $('.user_earnings').html(user_earn);
-        console.log(myShare)
-        $('.myShare').html(myShare);
        
         checkApproved();
         checkBalance();
@@ -158,7 +213,7 @@ $('.app_btn').click(async function() {
         }
 });
 
-$('.stk_btn').click(async function() {$("#stake_modal").modal("show");}); 
+$('.stk_btn').click(async function() {$("#stake_modal").appendTo("body").modal("show");}); 
 $('.stk_mod_btn').click(async function() {
     let stk_amt = $('#stk_amt').val();let lp_bal = $('.user_lp_bal').html();let tok="TRX";
     console.log(stk_amt);console.log(lp_bal);
@@ -185,7 +240,7 @@ $('.stk_mod_btn').click(async function() {
 
 });
 
-$('.unstk_btn').click(async function() {$("#unstake_modal").modal("show");});
+$('.unstk_btn').click(async function() {$("#unstake_modal").appendTo("body").modal("show");});
 $('.unstk_mod_btn').click(async function() {
     let unstk_amt = $('#unstk_amt').val(); console.log(unstk_amt);let user_stk_bal = $('.user_stk_bal').html();console.log('user stake is');console.log(user_stk_bal);
     if(!$.trim(unstk_amt).length){toastr.error('Not a valid amount');return false;}
