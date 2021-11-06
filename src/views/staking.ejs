@@ -28,10 +28,10 @@
                 <div class="col-xl-4 col-lg-4 col-md-8 mt-30 text-center">
                     <div class="wcu__item">
                         <div class="content">
-                            <h2 class="title" style="font-weight: 400;margin-bottom: 0px;font-size: 24px;">STAKING</h2>
+                            <h2 class="title ab_font" style="font-weight: 500;margin-bottom: 0px;font-size: 24px;">STAKING</h2>
                             <hr style="width:100%; margin: auto;color:#000" />
                             <span class="price user_stk_staking box_values">0</span>
-                            <h5 style="font-weight: 400;"> Tokens Staked</h5>
+                            <h5 class="ab_font" style="font-weight: 500;"> Tokens Staked</h5>
                             <button class="btn btn_primary text-uppercase app_btn" style="margin-top: 25px;">Approve</button>
                             <div class="stk_sec_token mt-25" style="display: none;">
                                 <button class="btn btn_primary stk_btn" disabled>STAKE</button>
@@ -43,10 +43,10 @@
                 <div class="col-xl-4 col-lg-4 col-md-8 mt-30 text-center">
                     <div class="wcu__item">
                         <div class="content">
-                            <h2 class="title" style="font-weight: 400;margin-bottom: 0px;font-size: 24px;">Rewards</h2>
+                            <h2 class="title ab_font" style="font-weight: 500;margin-bottom: 0px;font-size: 24px;">Rewards</h2>
                             <hr style="width:100%; margin: auto;color:#000" />
                             <span class="price user_earnings_staking box_values">0</span>
-                            <h5 style="font-weight: 500;">TOK EARNED</h5>
+                            <h5 class="ab_font" style="font-weight: 500;">TOK EARNED</h5>
                             <button class="btn btn_primary text-uppercase wid_db_btn" style="margin-top: 25px;">Withdraw</button>
                             <div class="wid_sec mt-25" style="display:flex;display: none;">
                                 <button class="btn btn_primary wid_btn" disabled>WITHDRAW</button>
@@ -92,9 +92,9 @@
 <div class="modal fade" id="stake_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal_me_top" role="document"><div class="modal-content modal-custom modal_me_custom"><div class="modal-body thirty_pad">
         <div class="transfer-respond">
-            <h4 class="modal_me_title">STAKE DLIKE/TRX LP Tokens</h4>
-            <label class="six_hun"><span class="user_lp_bal">0</span> DLK-TRX LP Available</label>
-            <div class="row line"><div class="col-md-12"><div class="form-group">
+            <h4 class="modal_me_title ab_font">STAKE Tokmax Tokens</h4>
+            <label class="six_hun"><span class="user_lp_bal">0</span> Tokmax Available</label>
+            <div class="row line" style="margin-top:20px"><div class="col-md-12"><div class="form-group">
                 <div class="input-group mb-3"><input type="text" class="form-control" name="stk_amt" id="stk_amt" placeholder="Enter Amount to Stake"><div class="input-group-append"><div class="input-group-text mb-deck modal_deck"> DLIKE/TRX LP</div></div>
                 <input type="hidden" id="refer_by" value="<?php echo $referrer;?>" />
             </div> </div></div></div>
@@ -106,10 +106,10 @@
 <div class="modal fade" id="unstake_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal_me_top" role="document"><div class="modal-content modal-custom modal_me_custom"><div class="modal-body thirty_pad">
         <div class="transfer-respond">
-            <h4 class="modal_me_title">UNSTAKE DLIKE/TRX LP Tokens</h4>
-            <label class="six_hun"><span class="user_stk_bal">0</span> DLK-TRX LP Staked</label>
-            <div class="row line"><div class="col-md-12"><div class="form-group">
-                <div class="input-group mb-3"><input type="text" class="form-control" name="unstk_amt" id="unstk_amt" placeholder="Enter Amount to UNStake"><div class="input-group-append"><div class="input-group-text mb-deck modal_deck"> DLIKE/TRX LP</div></div>
+            <h4 class="modal_me_title ab_font">UNSTAKE Tokmax Tokens</h4>
+            <label class="six_hun"><span class="user_stk_bal">0</span> Tokmax Staked</label>
+            <div class="row line" style="margin-top:20px"><div class="col-md-12"><div class="form-group">
+                <div class="input-group mb-3"><input type="text" class="form-control" name="unstk_amt" id="unstk_amt" placeholder="Enter Amount to UNStake"><div class="input-group-append"><div class="input-group-text mb-deck modal_deck"> Tokmax</div></div>
             </div> </div></div></div>
             <center><button type="submit" class="btn btn_primary unstk_mod_btn">UNSTAKE</button></center>
         </div>
@@ -219,7 +219,7 @@ $('.stk_mod_btn').click(async function() {
     console.log(stk_amt);console.log(lp_bal);
     if(!$.trim(stk_amt).length){toastr.error('Not a valid amount');return false;}
     if(parseFloat(stk_amt)<=0){toastr.error('Not a valid amount');return false;}
-    if(parseFloat(stk_amt)>parseFloat(lp_bal)){toastr.error('Not enough LP token balance');return false;}
+    if(parseFloat(stk_amt)>parseFloat(lp_bal)){toastr.error('Not enough token balance');return false;}
    
     let stk_amt_val = stk_amt * 1e6;
     var result = await stakingContractInstance.methods.stake(stk_amt_val).send({
@@ -245,8 +245,9 @@ $('.unstk_mod_btn').click(async function() {
     let unstk_amt = $('#unstk_amt').val(); console.log(unstk_amt);let user_stk_bal = $('.user_stk_bal').html();console.log('user stake is');console.log(user_stk_bal);
     if(!$.trim(unstk_amt).length){toastr.error('Not a valid amount');return false;}
     if(parseFloat(unstk_amt)<=0){toastr.error('Not a valid amount');return false;}
-    if(parseFloat(unstk_amt)>parseFloat(user_stk_bal)){toastr.error('Not enough LP tokens staked');return false;}
+    if(parseFloat(unstk_amt)>parseFloat(user_stk_bal)){toastr.error('Not enough tokens staked');return false;}
     let unstk_amt_val = unstk_amt * 1e6;    
+    $('.unstk_mod_btn').html('unstaking...').prop('disabled', true)
     var result = await stakingContractInstance.methods.withdraw(unstk_amt_val).send({
         from: myAccountAddress,
         to: tokmas_contract_address,
@@ -260,6 +261,7 @@ $('.unstk_mod_btn').click(async function() {
         toastr.success('Transaction Initiated. Check status on <a href="'+bscscanTxURL+result.transactionHash+'" target="_blank">BscScan</a>');
     }else{
         toastr.error('Transaction Failed. Try Again.');
+        $('.unstk_mod_btn').html('unstake').prop('disabled', false)
     }
 });
 
