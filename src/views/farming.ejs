@@ -21,30 +21,42 @@
         <!-- breadcrumb area end -->
 
 
-<section class="wcu__area pb-120 pt-80" style="background: #fff;">
+<section class="wcu__area pb-80 pt-80" style="background: #fff;">
     <div class="container">
         <div class="row mt-none-30">
-            <div class="col-md-6 mt-30 text-center">
+            <div class="col-md-6 mt-20 text-center">
                 <div class="wcu__item">
-                    <div class="icon">
+                    <div class="icon" style="margin-bottom:15px">
                         <img src="https://xpressrow.com/html/cafena/cafena/assets/images/icons/wcu-1.png" alt="">
                     </div>
                     <div class="content">
-                        <h2 style="font-weight:400">Breeze Foundation</h2>
-                        <p>Become witness on Breeze chain to ensure open source blockchain</p>
-                        <a href="about.html" class="site-btn mt-20">breeze.foundation</a>
+                        <h2 style="font-weight:400">LP Staking</h2>
+                        <h3 class="user_stk" style="font-weight:400;color: #967f72;">0</h3>
+                        <h5 style="font-weight:400">My Staked LP Tokens</h5>
+                        <button class="site-btn mt-10 app_btn">Approve TOK/BNB LP</button>
+                        <div class="stk_sec mt-10" style="display: none;">
+                            <button class="site-btn stk_btn" disabled>STAKE</button>
+                            <button class="site-btn unstk_btn" disabled>UNSTAKE</button>
+                        </div>
+                        <h5 style="font-weight:400;padding-top: 6px;letter-spacing: 0.5px;"><i class="fas fa-arrow-right" style="font-size:16px;padding-right:10px;"></i>VIEW on BSC Scan</h5>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mt-30 text-center">
+            <div class="col-md-6 mt-20 text-center">
                 <div class="wcu__item">
-                    <div class="icon">
-                        <img src="https://xpressrow.com/html/cafena/cafena/assets/images/icons/wcu-2.png" alt="">
+                    <div class="icon" style="margin-bottom:15px">
+                        <img src="https://xpressrow.com/html/cafena/cafena/assets/images/icons/wcu-3.png" alt="">
                     </div>
                     <div class="content">
-                        <h2 style="font-weight:400">BeSocial</h2>
-                        <p>Become part of an open source social media and share-to-earn</p>
-                        <a href="about.html" class="site-btn mt-20">besocial.ai</a>
+                        <h2 style="font-weight:400">Rewards</h2>
+                        <h3 class="user_earnings" style="font-weight:400;color: #967f72;">0</h3>
+                        <h5 style="font-weight:400;">Tokens Earned</h5>
+                        <a class="site-btn mt-10 wid_db_btn" disabled>Withdraw</a>
+                        <div class="wid_sec mt-10" style="display:flex;display: none;">
+                            <button class="site-btn wid_btn" disabled>WITHDRAW</button>
+                            <button class="site-btn ext_btn" disabled>EXIT</button>
+                        </div>
+                        <h5 style="font-weight:400;padding-top: 6px;letter-spacing: 0.5px;"><i class="fas fa-arrow-right" style="font-size:16px;padding-right:10px;"></i>Trade on Pancakeswap</h5>
                     </div>
                 </div>
             </div>
@@ -53,77 +65,42 @@
 </section>
 
 
-
-
-
-        <!-- wcu section start -->
-        <section class="wcu__area pt-100 pb-100">
-            <div class="container">
-
-                <div class="row" style="justify-content:center;">
-                    
-                    <div class="col-xl-4 col-lg-4 col-md-8 mt-30 text-center">
-                        <div class="wcu__item">
-                            <div class="content">
-                                <h2 class="title ab_font" style="font-weight: 500;margin-bottom: 0px;font-size: 24px;">LP STAKING</h2>
-                                <hr style="width:100%; margin: auto;color:#000  " />
-                                <span class="price user_stk" style="color: #C7A17A;font-size: 25px;font-family: 'Bebas Neue', cursive;padding-top: 10px;">0</span>
-                                <h5 class="ab_font" style="font-weight: 500;">LP Tokens Staked</h5>
-                                <button class="btn btn_primary text-uppercase app_btn" style="margin-top: 25px;">Approve TOK/BNB LP</button>
-                                <div class="stk_sec mt-25" style="display: none;">
-                                    <button class="btn btn_primary stk_btn" disabled>STAKE</button>
-                                    <button class="btn btn_primary unstk_btn" disabled>UNSTAKE</button>
-                                </div>
-                            </div>
-                        </div>
+<section id="feature_section" class="feature_section sec_ptb_80">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4 col-sm-6 wow fadeInUp2" data-wow-delay=".1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp2;">
+                <div class="features_item box_stat">
+                    <div class="item_icon">
+                        <img src="https://xpressrow.com/html/cafena/cafena/assets/images/icons/f-icon-3.png" alt="icon_not_found">
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-8 mt-30 text-center">
-                        <div class="wcu__item">
-                            <div class="content">
-                                <h2 class="title ab_font" style="font-weight: 500;margin-bottom: 0px;font-size: 24px;">Rewards</h2>
-                                <hr style="width:100%; margin: auto;color:#000  " />
-                                <span class="price user_earnings" style="color: #C7A17A;font-size: 25px;font-family: 'Bebas Neue', cursive;padding-top: 10px;">0</span>
-                                <h5 class="ab_font" style="font-weight: 500;">TOK EARNED</h5>
-                                <button class="btn btn_primary text-uppercase wid_db_btn" style="margin-top: 25px;" disabled>Withdraw</button>
-                                <div class="wid_sec mt-25" style="display:flex;display: none;">
-                                    <button class="btn btn_primary wid_btn" disabled>WITHDRAW</button>
-                                    <button class="btn btn_primary ext_btn" disabled>EXIT</button>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-
-                <div class="row" style="justify-content:center;">
-                    <div class="col-xl-8 col-lg-8 col-md-8 mt-30 text-center">
-                        <div class="wcu__item">
-                            <ul class="about__list list-unstyled" style="text-align: left;margin-bottom: 1px;padding-top: 25px;">
-                                <li><span style="color: #1b2026 !important;font-size: 15px;"><i class="icon fal fa-long-arrow-right" style="margin-bottom: 20px;background: #fff;color: #000;line-height: 30px;width: 30px;height: 30px;margin-right: 5px;"></i> TOTAL STAKED TOKENS </span><span style="text-align:right;color: #1b2026 !important;" class="tot_staked">0</span></li>
-                                <li><span style="color: #1b2026 !important;font-size: 15px;"><i class="icon fal fa-long-arrow-right" style="margin-bottom: 20px;background: #fff;color: #000;line-height: 30px;width: 30px;height: 30px;margin-right: 5px;"></i> MY STAKING SHARE </span><span style="text-align:right;color: #1b2026 !important;" class="myShare">0</span></li>
-                                <li><span style="color: #1b2026 !important;font-size: 15px;"><i class="icon fal fa-long-arrow-right" style="background: #fff;color: #000;line-height: 30px;width: 30px;height: 30px;margin-right: 5px;"></i> POOL SUPPLY </span><span style="text-align:right;color: #1b2026 !important;" class="pol_supply">0</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row" style="justify-content:center;">
-                    
-                    <div class="col-md-4 mt-20 text-center">
-                        <div class="wcu__item" style="padding:10px;background:#010103;">
-                            <div class="content">
-                                <h2 class="title" style="font-weight: 400;margin-bottom: 0px;font-size: 24px;color: #fff;">View on BSC Scan</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mt-20 text-center">
-                        <div class="wcu__item" style="padding:10px;background:#010103;">
-                            <div class="content">
-                                <h2 class="title" style="font-weight: 400;margin-bottom: 0px;font-size: 24px;color: #fff;">Trade on Pancakeswap</h2>
-                            </div>
-                        </div>
-                    </div>
+                    <h2 class="mb-2 tot_staked">0</h2>
+                    <h3 class="item_title mb-0">Total Staked</h3>
                 </div>
             </div>
-        </section>
-        <!-- wcu section end -->
-    </main>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 wow fadeInUp2" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp2;">
+                <div class="features_item box_stat">
+                    <div class="item_icon">
+                        <img src="https://xpressrow.com/html/cafena/cafena/assets/images/icons/f-icon-1.png" alt="icon_not_found">
+                    </div>
+                    <h2 class="mb-2 myShare">0</h2>
+                    <h3 class="item_title mb-0">My Share</h3>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-6 wow fadeInUp2" data-wow-delay=".3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp2;">
+                <div class="features_item box_stat">
+                    <div class="item_icon">
+                        <img src="https://xpressrow.com/html/cafena/cafena/assets/images/icons/f-icon-4.png" alt="icon_not_found">
+                    </div>
+                    <h2 class="mb-2 pol_supply">0</h2>
+                    <h3 class="item_title mb-0">Pool Supply</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</main>
 
 <div class="modal fade" id="stake_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal_me_top" role="document"><div class="modal-content modal-custom modal_me_custom"><div class="modal-body thirty_pad">
