@@ -119,14 +119,15 @@
                     }
                 }
             }
-        }
-        .active {
-            >a {
-                color: $theme-color;
-                &::after {
-                    opacity: 1;
-                    visibility: visible;
-                    left: 0;
+
+            &.active {
+                a {
+                    color: $theme-color;
+                    &::after {
+                        opacity: 1;
+                        visibility: visible;
+                        left: 0;
+                    }
                 }
             }
         }
@@ -269,3 +270,90 @@
         }
     }
 }
+
+
+
+// Newly Written Scss Here 
+
+.main-menu.ft-fixed-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 80;
+    border-top: 2px solid #f5f8fa;
+    background: #fff;
+
+     ul {
+         display:flex;
+         justify-content: space-around;
+         li {
+
+            &:not(:last-child) {
+                margin-right: 0;
+            }
+             a {
+                padding: 10px;
+                color: $bg-dark;
+                text-align: center;
+                font-size: 14px;
+                &::after {
+                    content: none;
+                }
+                
+                .icn {
+                    margin-bottom: 2px;
+                    line-height: 1;
+                    min-height: 18px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    pointer-events: none;
+                    svg {
+                        max-width: 18px;
+                        max-height: 16px;
+                        path {
+                            transition: .3s;
+                        }
+                       
+                    }
+                }
+                &:hover {
+                    color: $theme-color;
+                    .icn {
+                        svg {
+                            path {
+                                fill: $theme-color;
+                            }
+                        }
+                    }
+                }
+             }
+
+             ul.sub-menu {
+                 bottom: 100%;
+                 top: auto;
+                 transform-origin: 100% 100%;
+                 right: 0;
+                min-width: 180px;
+                padding: 10px 0;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                 li {
+                     a {
+                         display: flex;
+                         align-items: center;
+                         padding: 5px 15px;
+                         .icn {
+                             display: inline-block;
+                             margin-right: 10px;
+                             margin-bottom: 0;
+                             pointer-events: none;
+                         }
+                     }
+                 }
+             }
+         }
+     }
+  }

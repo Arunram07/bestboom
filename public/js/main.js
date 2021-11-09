@@ -1,7 +1,7 @@
 (function ($) {
-    'use strict';
+	'use strict';
 
-    /*------------- preloader js --------------*/
+	/*------------- preloader js --------------*/
 	function loader() {
 		$(window).on('load', function () {
 			$('#ctn-preloader').addClass('loaded');
@@ -24,16 +24,16 @@
 
 	// scroll to top js
 	var scroll = $(".go-top");
-	scroll.on('click', function() {
+	scroll.on('click', function () {
 		$('html , body').animate({
 			scrollTop: 0
 		}, 300);
 	});
 
-    // background image js
+	// background image js
 	function background() {
-			var img=$('.bg_img');
-			img.css('background-image', function () {
+		var img = $('.bg_img');
+		img.css('background-image', function () {
 			var bg = ('url(' + $(this).data('background') + ')');
 			return bg;
 		});
@@ -115,7 +115,7 @@
 		nav: true,
 		dots: false,
 		navText: ["<i class='fa fa-long-arrow-left'></i>", "<i class='fa fa-long-arrow-right'></i>"],
-		responsiveClass:true,
+		responsiveClass: true,
 		responsive: {
 			0: {
 				items: 1,
@@ -144,19 +144,19 @@
 		nav: true,
 		dots: false,
 		navText: ["<i class='fa fa-long-arrow-left'></i>", "<i class='fa fa-long-arrow-right'></i>"],
-		responsiveClass:true,
+		responsiveClass: true,
 	});
 
 	//  product popup
-	$('.view').on('click',function() {
+	$('.view').on('click', function () {
 		$('.overlay, .product-popup-1').addClass('show-popup');
 	});
 
-	$('.product-highlight__trigger').on('click',function() {
+	$('.product-highlight__trigger').on('click', function () {
 		$('.overlay, .popup-coffe-mechine').addClass('show-popup');
 	});
 
-	$('.overlay,.product-p-close').on('click',function() {
+	$('.overlay,.product-p-close').on('click', function () {
 		$('.overlay, .popup-coffe-mechine, .product-popup').removeClass('show-popup');
 	});
 
@@ -225,7 +225,7 @@
 	});
 
 	$("#amount").val("$" + $("#slider-range").slider("values", 0) +
-	" - $" + $("#slider-range").slider("values", 1));
+		" - $" + $("#slider-range").slider("values", 1));
 
 	// map active
 	function basicmap() {
@@ -328,5 +328,13 @@
 	if ($('#contactmap').length != 0) {
 		google.maps.event.addDomListener(window, 'load', contactcmap);
 	}
+
+	// Query For menu link activeness
+	$('.main-menu ul li a').on('click', function () {
+		$(this).parent().siblings().removeClass('active');
+		$(this).parent().addClass('active');
+	})
+
+
 
 })(jQuery);
