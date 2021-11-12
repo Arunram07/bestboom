@@ -84,10 +84,16 @@
 	// cart info
 	$(".cart-trigger").on("click", function (e) {
 		e.preventDefault();
-		$(".cart-bar-wrapper").toggleClass("show");
-		$("body").addClass("on-side");
-		$('.overlay').addClass('active');
-		$(this).addClass('active');
+		if ($(e.target).attr('href') === undefined) {
+			console.log("this have not a link!");
+			$(".cart-bar-wrapper").toggleClass("show");
+			$("body").addClass("on-side");
+			$('.overlay').addClass('active');
+			$(this).addClass('active');
+		} else {
+			window.open($(e.target).attr('href'), '_blank');
+		}
+
 	});
 
 	$(".cart-bar__close > a").on("click", function (e) {
@@ -104,6 +110,27 @@
 		$("body").removeClass("on-side");
 		$('.cart-trigger').removeClass('active');
 	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// feature slider
 	var owl = $('.feature__slider');
@@ -329,12 +356,15 @@
 		google.maps.event.addDomListener(window, 'load', contactcmap);
 	}
 
-	// Query For menu link activeness
-	$('.main-menu ul li a').on('click', function () {
-		$(this).parent().siblings().removeClass('active');
-		$(this).parent().addClass('active');
-	})
-
+	// Query Adding Active Navigation Class Based on URL
+	$(function ($) {
+		var path = window.location.href;
+		$('.main-menu a').each(function () {
+			if (this.href === path) {
+				$(this).parent().addClass('active');
+			}
+		});
+	});
 
 
 })(jQuery);

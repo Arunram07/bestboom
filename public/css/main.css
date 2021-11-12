@@ -2663,11 +2663,13 @@ h6 {
   transition: .3s;
 }
 
-.main-menu.ft-fixed-menu ul li a:hover {
+.main-menu.ft-fixed-menu ul li a:hover,
+.main-menu.ft-fixed-menu ul li.active a {
   color: #C7A17A;
 }
 
-.main-menu.ft-fixed-menu ul li a:hover .icn svg path {
+.main-menu.ft-fixed-menu ul li a:hover .icn svg path,
+.main-menu.ft-fixed-menu ul li.active a .icn svg path {
   fill: #C7A17A;
 }
 
