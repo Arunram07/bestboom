@@ -112,26 +112,6 @@
 	});
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	// feature slider
 	var owl = $('.feature__slider');
 	owl.owlCarousel({
@@ -359,7 +339,7 @@
 	// Query Adding Active Navigation Class Based on URL
 	$(function ($) {
 		var path = window.location.href;
-		$('.main-menu a').each(function () {
+		$('.main-menu li:not(:first-child) a').each(function () {
 			if (this.href === path) {
 				$(this).parent().addClass('active');
 			}

@@ -849,6 +849,13 @@ h1 span:before {
   .footer_section .footer_bottom {
     margin-top: 50px;
   }
+  
+.footer__logo--content {
+  text-align: center;
+}
+.social-links {
+  justify-content: center;
+}
 }
 /* 4 - media screen and (max-width: 991px) - end
 ==================================================================================================== */
