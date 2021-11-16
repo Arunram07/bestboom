@@ -1,19 +1,22 @@
-var express = require('express')
-const routes = require('./src/routes/index');
+import express from "express";
+import routes from "./src/routes/index.js";
 const app = express();
-const bodyParser = require('body-parser')
+import bodyParser from "body-parser";
+import path from "path";
 
-app.use(express.static('public'))
-app.use('/css', express.static(__dirname + 'public/css'))
-app.use('/images', express.static(__dirname + 'public/images'))
-app.use('/js', express.static(__dirname + 'public/js'))
+const __dirname = path.resolve();
+
+app.use(express.static("public"));
+app.use("/css", express.static(__dirname + "public/css"));
+app.use("/images", express.static(__dirname + "public/images"));
+app.use("/js", express.static(__dirname + "public/js"));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended : true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set('views', './src/views')
-app.set('view engine', 'ejs')
+app.set("views", "./src/views");
+app.set("view engine", "ejs");
 
-app.use('/', routes);
+app.use("/", routes);
 
-module.exports = app;
+export default app;
