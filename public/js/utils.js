@@ -11,7 +11,11 @@
         });
       }
       function n(t, n) {
-        return t || (t = m()), (v = e("#" + t.containerId)), v.length ? v : (n && (v = d(t)), v);
+        return (
+          t || (t = m()),
+          (v = e("#" + t.containerId)),
+          v.length ? v : (n && (v = d(t)), v)
+        );
       }
       function o(e, t, n) {
         return g({
@@ -51,7 +55,9 @@
         var o = m();
         return (
           v || n(o),
-          t && 0 === e(":focus", t).length ? void h(t) : void (v.children().length && v.remove())
+          t && 0 === e(":focus", t).length
+            ? void h(t)
+            : void (v.children().length && v.remove())
         );
       }
       function l(t) {
@@ -157,7 +163,9 @@
               j.click(function (e) {
                 e.stopPropagation
                   ? e.stopPropagation()
-                  : void 0 !== e.cancelBubble && e.cancelBubble !== !0 && (e.cancelBubble = !0),
+                  : void 0 !== e.cancelBubble &&
+                    e.cancelBubble !== !0 &&
+                    (e.cancelBubble = !0),
                   E.onCloseClick && E.onCloseClick(e),
                   b(!0);
               }),
@@ -188,17 +196,22 @@
         function u() {
           if (t.title) {
             var e = t.title;
-            E.escapeHtml && (e = o(t.title)), M.append(e).addClass(E.titleClass), I.append(M);
+            E.escapeHtml && (e = o(t.title)),
+              M.append(e).addClass(E.titleClass),
+              I.append(M);
           }
         }
         function d() {
           if (t.message) {
             var e = t.message;
-            E.escapeHtml && (e = o(t.message)), B.append(e).addClass(E.messageClass), I.append(B);
+            E.escapeHtml && (e = o(t.message)),
+              B.append(e).addClass(E.messageClass),
+              I.append(B);
           }
         }
         function p() {
-          E.closeButton && (j.addClass(E.closeClass).attr("role", "button"), I.prepend(j));
+          E.closeButton &&
+            (j.addClass(E.closeClass).attr("role", "button"), I.prepend(j));
         }
         function g() {
           E.progressBar && (q.addClass(E.progressClass), I.prepend(q));
@@ -243,7 +256,10 @@
         function H() {
           clearTimeout(k),
             (F.hideEta = 0),
-            I.stop(!0, !0)[E.showMethod]({ duration: E.showDuration, easing: E.showEasing });
+            I.stop(!0, !0)[E.showMethod]({
+              duration: E.showDuration,
+              easing: E.showEasing,
+            });
         }
         function x() {
           var e = ((F.hideEta - new Date().getTime()) / F.maxHideTime) * 100;
@@ -253,7 +269,8 @@
           y = t.iconClass || E.iconClass;
         if (
           ("undefined" != typeof t.optionsOverride &&
-            ((E = e.extend(E, t.optionsOverride)), (y = t.optionsOverride.iconClass || y)),
+            ((E = e.extend(E, t.optionsOverride)),
+            (y = t.optionsOverride.iconClass || y)),
           !O(E, t))
         ) {
           T++, (v = n(E, !0));
@@ -264,7 +281,13 @@
             q = e("<div/>"),
             j = e(E.closeHtml),
             F = { intervalId: null, hideEta: null, maxHideTime: null },
-            P = { toastId: T, state: "visible", startTime: new Date(), options: E, map: t };
+            P = {
+              toastId: T,
+              state: "visible",
+              startTime: new Date(),
+              options: E,
+              map: t,
+            };
           return s(), r(), a(), f(P), E.debug && console && console.log(P), I;
         }
       }
@@ -274,13 +297,20 @@
       function h(e) {
         v || (v = n()),
           e.is(":visible") ||
-            (e.remove(), (e = null), 0 === v.children().length && (v.remove(), (w = void 0)));
+            (e.remove(),
+            (e = null),
+            0 === v.children().length && (v.remove(), (w = void 0)));
       }
       var v,
         C,
         w,
         T = 0,
-        O = { error: "error", info: "info", success: "success", warning: "warning" },
+        O = {
+          error: "error",
+          info: "info",
+          success: "success",
+          warning: "warning",
+        },
         b = {
           clear: r,
           remove: c,
@@ -311,7 +341,8 @@ function shorten(a) {
   return res;
 }
 const lp_contract_address = "0x5b10582dff03bafa7b12e851c6f8aeeb821b9c0a";
-const tokmasbnbPool_contract_address = "0x35555b2b22497b4eb2993aa0f9aa4bbcb995973a";
+const tokmasbnbPool_contract_address =
+  "0x35555b2b22497b4eb2993aa0f9aa4bbcb995973a";
 const tokmas_contract_address = "0xD2606eD0a363B6c70A9CCcE77920f5278350beA0";
 const tokmas_staking_contract = "0xF80D1513964A692b70e0ac831fB18f4dfBBa0c73";
 const tokmasbnbPool_ABI = JSON.parse(
@@ -350,12 +381,26 @@ if (window.ethereum) {
       //     // Run any other necessary logic...
     }
   }
+} else if (window.BinanceChain) {
+  const oldProvider = web3.currentProvider;
+  var myweb3 = new Web3(oldProvider);
+  BinanceChain.on("accountsChanged", handleAccountsChanged);
+  function handleAccountsChanged(accounts) {
+    if (accounts.length === 0) {
+      // MetaMask is locked or the user has not connected any accounts
+      console.log("Please connect to MetaMask.");
+    } else if (accounts[0] !== myAccountAddress) {
+      //localStorage.setItem('myAccountAddress', accounts[0]);
+      window.location.href = "";
+      //     // Run any other necessary logic...
+    }
+  }
 } else {
   const oldProvider = web3Infura.currentProvider; // keep a reference to metamask provider
   var myweb3 = new Web3(oldProvider);
 }
 function checkAccount() {
-  if (window.ethereum) {
+  if (window.ethereum || window.BinanceChain) {
     myweb3.eth.getAccounts((err, accounts) => {
       if (accounts == null || accounts.length == 0) {
         console.log("NO ACCOUNT CONNECTED");
@@ -383,7 +428,9 @@ $(document).ready(async function () {
       window.ethereum.enable();
       var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile && window.ethereum.isMetaMask == true) {
-        const accounts_ = await window.ethereum.request({ method: "eth_requestAccounts" });
+        const accounts_ = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
         //alert(accounts_);
       } else {
         const accounts_ = await ethereum.request({ method: "eth_accounts" });
@@ -394,15 +441,36 @@ $(document).ready(async function () {
       // }
     }
   });
-  $("#walletConnect").click(async function (e) {
+  $("#connectWalletBSC").click(async function (e) {
     e.preventDefault();
-    // if (window.ethereum) {
-    const web3 = new Web3("https://bsc-dataseed1.binance.org:443");
-    const loader = setupLoader({ provider: web3 }).web3;
+    if (window.BinanceChain) {
+      var accounts_;
+      if (!window.BinanceChain.isConnected()) {
+        accounts_ = await window.BinanceChain.request({
+          method: "eth_requestAccounts",
+        });
+      } else {
+        accounts_ = await window.BinanceChain.request({
+          method: "eth_accounts",
+        });
+      }
 
-    const account = web3.eth.accounts.create();
-    console.log("account");
-    // }
+      const shortAddress = getUserAddress(accounts_[0]);
+      $("#connectWallet1").html(shortAddress);
+      $("#connectWallet1")
+        .attr("href", "https://bscscan.com/address/" + myAccountAddress)
+        .attr("target", "_blank")
+        .removeClass("cart-trigger");
+
+      //alert(accounts_);
+
+      //const accounts_ = await ethereum.request({ method: 'eth_accounts' });
+      // if(accounts_!=""){
+      //     window.location.href = "";
+      // }
+    } else if (window.BinanceChain == undefined) {
+      console.error("Install Binance Wallet extension and try again");
+    }
   });
 });
 
@@ -431,7 +499,11 @@ $(document).ready(async function () {
         });
       }
       function n(t, n) {
-        return t || (t = m()), (v = e("#" + t.containerId)), v.length ? v : (n && (v = d(t)), v);
+        return (
+          t || (t = m()),
+          (v = e("#" + t.containerId)),
+          v.length ? v : (n && (v = d(t)), v)
+        );
       }
       function o(e, t, n) {
         return g({
@@ -471,7 +543,9 @@ $(document).ready(async function () {
         var o = m();
         return (
           v || n(o),
-          t && 0 === e(":focus", t).length ? void h(t) : void (v.children().length && v.remove())
+          t && 0 === e(":focus", t).length
+            ? void h(t)
+            : void (v.children().length && v.remove())
         );
       }
       function l(t) {
@@ -577,7 +651,9 @@ $(document).ready(async function () {
               j.click(function (e) {
                 e.stopPropagation
                   ? e.stopPropagation()
-                  : void 0 !== e.cancelBubble && e.cancelBubble !== !0 && (e.cancelBubble = !0),
+                  : void 0 !== e.cancelBubble &&
+                    e.cancelBubble !== !0 &&
+                    (e.cancelBubble = !0),
                   E.onCloseClick && E.onCloseClick(e),
                   b(!0);
               }),
@@ -608,17 +684,22 @@ $(document).ready(async function () {
         function u() {
           if (t.title) {
             var e = t.title;
-            E.escapeHtml && (e = o(t.title)), M.append(e).addClass(E.titleClass), I.append(M);
+            E.escapeHtml && (e = o(t.title)),
+              M.append(e).addClass(E.titleClass),
+              I.append(M);
           }
         }
         function d() {
           if (t.message) {
             var e = t.message;
-            E.escapeHtml && (e = o(t.message)), B.append(e).addClass(E.messageClass), I.append(B);
+            E.escapeHtml && (e = o(t.message)),
+              B.append(e).addClass(E.messageClass),
+              I.append(B);
           }
         }
         function p() {
-          E.closeButton && (j.addClass(E.closeClass).attr("role", "button"), I.prepend(j));
+          E.closeButton &&
+            (j.addClass(E.closeClass).attr("role", "button"), I.prepend(j));
         }
         function g() {
           E.progressBar && (q.addClass(E.progressClass), I.prepend(q));
@@ -663,7 +744,10 @@ $(document).ready(async function () {
         function H() {
           clearTimeout(k),
             (F.hideEta = 0),
-            I.stop(!0, !0)[E.showMethod]({ duration: E.showDuration, easing: E.showEasing });
+            I.stop(!0, !0)[E.showMethod]({
+              duration: E.showDuration,
+              easing: E.showEasing,
+            });
         }
         function x() {
           var e = ((F.hideEta - new Date().getTime()) / F.maxHideTime) * 100;
@@ -673,7 +757,8 @@ $(document).ready(async function () {
           y = t.iconClass || E.iconClass;
         if (
           ("undefined" != typeof t.optionsOverride &&
-            ((E = e.extend(E, t.optionsOverride)), (y = t.optionsOverride.iconClass || y)),
+            ((E = e.extend(E, t.optionsOverride)),
+            (y = t.optionsOverride.iconClass || y)),
           !O(E, t))
         ) {
           T++, (v = n(E, !0));
@@ -684,7 +769,13 @@ $(document).ready(async function () {
             q = e("<div/>"),
             j = e(E.closeHtml),
             F = { intervalId: null, hideEta: null, maxHideTime: null },
-            P = { toastId: T, state: "visible", startTime: new Date(), options: E, map: t };
+            P = {
+              toastId: T,
+              state: "visible",
+              startTime: new Date(),
+              options: E,
+              map: t,
+            };
           return s(), r(), a(), f(P), E.debug && console && console.log(P), I;
         }
       }
@@ -694,13 +785,20 @@ $(document).ready(async function () {
       function h(e) {
         v || (v = n()),
           e.is(":visible") ||
-            (e.remove(), (e = null), 0 === v.children().length && (v.remove(), (w = void 0)));
+            (e.remove(),
+            (e = null),
+            0 === v.children().length && (v.remove(), (w = void 0)));
       }
       var v,
         C,
         w,
         T = 0,
-        O = { error: "error", info: "info", success: "success", warning: "warning" },
+        O = {
+          error: "error",
+          info: "info",
+          success: "success",
+          warning: "warning",
+        },
         b = {
           clear: r,
           remove: c,
